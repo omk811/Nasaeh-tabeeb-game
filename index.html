@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نصائح طبيب - المحور الخامس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2ECC71;
+            --secondary: #3498DB;
+            --accent: #E74C3C;
+            --warning: #F39C12;
+            --success: #27AE60;
+            --dark: #2C3E50;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1ABC9C 100%);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            color: white;
+            margin-bottom: 15px;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 800;
+        }
+
+        .header .subtitle {
+            font-size: 1.5em;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 500;
+        }
+
+        .score-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: linear-gradient(to bottom, #F0F9FF, white);
+        }
+
+        .score-card {
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 3px solid;
+        }
+
+        .score-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .score-card .icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .score-card .label {
+            font-size: 1.1em;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .score-card .value {
+            font-size: 2.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tabs {
+            display: flex;
+            background: #ECF0F1;
+            padding: 15px 25px;
+            gap: 15px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 20px 25px;
+            background: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), #1ABC9C);
+            color: white;
+        }
+
+        .game-content {
+            padding: 50px 40px;
+            min-height: 600px;
+        }
+
+        .game-section {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .game-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .poem-verse {
+            background: white;
+            padding: 30px 40px;
+            margin: 25px 0;
+            border-radius: 25px;
+            border-right: 8px solid var(--primary);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            font-family: 'Amiri', serif;
+            font-size: 1.6em;
+            line-height: 2.2;
+        }
+
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .matching-item {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 20px;
+            font-size: 1.4em;
+            cursor: pointer;
+            border: 3px solid transparent;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .matching-item.selected {
+            border-color: var(--secondary);
+            background: linear-gradient(to left, white, #E3F2FD);
+        }
+
+        .matching-item.correct {
+            border-color: var(--success);
+            background: linear-gradient(to left, white, #E8F5E9);
+        }
+
+        .btn {
+            padding: 20px 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.4em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--primary), #1ABC9C);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-6px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .tf-card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tf-statement {
+            font-size: 1.6em;
+            line-height: 2;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Amiri', serif;
+            color: var(--dark);
+        }
+
+        .tf-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .tf-btn {
+            padding: 20px 50px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.3em;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tf-btn.correct {
+            background: linear-gradient(135deg, var(--success), #27AE60);
+            color: white;
+        }
+
+        .tf-btn.wrong {
+            background: linear-gradient(135deg, var(--accent), #C0392B);
+            color: white;
+        }
+
+        .tf-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .draggable-verse {
+            background: white;
+            padding: 25px 35px;
+            margin: 20px 0;
+            border-radius: 20px;
+            border-right: 8px solid #9B59B6;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            cursor: move;
+            font-family: 'Amiri', serif;
+            font-size: 1.5em;
+            line-height: 2;
+            transition: all 0.3s ease;
+        }
+
+        .draggable-verse:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .draggable-verse.dragging {
+            opacity: 0.5;
+        }
+
+        .question-card {
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .option {
+            padding: 20px 30px;
+            margin: 15px 0;
+            background: white;
+            border: 3px solid #E0E0E0;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            border-color: var(--secondary);
+            transform: translateX(-10px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: linear-gradient(to left, white, #E8F5E9);
+        }
+
+        .option.correct-answer {
+            border-color: var(--success);
+            background: linear-gradient(to left, white, #C8E6C9);
+        }
+
+        .option.wrong-answer {
+            border-color: var(--accent);
+            background: linear-gradient(to left, white, #FFCDD2);
+        }
+
+        .feedback-msg {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 25px 50px;
+            border-radius: 20px;
+            font-size: 1.4em;
+            font-weight: 700;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .feedback-msg.success {
+            background: linear-gradient(135deg, var(--success), #27AE60);
+            color: white;
+        }
+
+        .feedback-msg.error {
+            background: linear-gradient(135deg, var(--accent), #C0392B);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .matching-container {
+                grid-template-columns: 1fr;
+            }
+            .tf-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 نصائح طبيب 🏥</h1>
+            <p class="subtitle">المحور الخامس: رياضتي وصحتي</p>
+            <p style="color: rgba(255,255,255,0.9); margin-top: 10px; font-style: italic;">للشاعر: أحمد الفارسي</p>
+        </div>
+
+        <div class="score-board">
+            <div class="score-card" style="border-color: var(--primary);">
+                <div class="icon">❤️</div>
+                <div class="label">صحة الجسم</div>
+                <div class="value" id="health">100%</div>
+            </div>
+            <div class="score-card" style="border-color: var(--warning);">
+                <div class="icon">⭐</div>
+                <div class="label">النقاط</div>
+                <div class="value" id="score">0</div>
+            </div>
+            <div class="score-card" style="border-color: var(--success);">
+                <div class="icon">✅</div>
+                <div class="label">الإجابات الصحيحة</div>
+                <div class="value" id="correct">0</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('poem')">📖 القصيدة</button>
+            <button class="tab-btn" onclick="switchTab('matching')">🔗 المطابقة</button>
+            <button class="tab-btn" onclick="switchTab('quiz')">❓ الاختبار</button>
+            <button class="tab-btn" onclick="switchTab('truefalse')">✔️ صح/خطأ</button>
+            <button class="tab-btn" onclick="switchTab('order')">🔢 الترتيب</button>
+        </div>
+
+        <div class="game-content">
+            <div id="poem" class="game-section active">
+                <h2 style="font-size: 2.8em; color: var(--primary); text-align: center; margin-bottom: 40px;">🌟 قصيدة نصائح طبيب 🌟</h2>
+                
+                <div style="background: linear-gradient(to left, white, #E3F2FD); padding: 30px; border-radius: 20px; margin-bottom: 30px; border-right: 6px solid var(--secondary);">
+                    <p style="font-size: 1.3em; line-height: 2; color: var(--dark);"><strong>عن الشاعر:</strong> أحمد الفارسي طبيب وشاعر عماني، جمع بين مهنة الطب وموهبة الشعر.</p>
+                </div>
+
+                <div class="poem-verse">إذا ما شئتَ أن تحيا سليمًا ... وتُمضي دربُ عُمرِكَ مُستقيمًا</div>
+                <div class="poem-verse">فخُذْ بعضَ النصائحِ من طبيبٍ ... بتطبيبِ الوَرى أضحى فهيمًا</div>
+                <div class="poem-verse">إذا ما كنتَ ذا جسمٍ سليمٍ ... ستُؤتى هكذا عقلاً سليمًا</div>
+                <div class="poem-verse">فراقبْ صحةَ البدنِ المُعافى ... ولا تتركْهُ مُعتلاً سقيمًا</div>
+                <div class="poem-verse">مُمارسةُ الرياضةِ كلَّ يومٍ ... تعدُّ أخيًّا إنجازًا عظيمًا</div>
+                <div class="poem-verse">ووزنُكَ ليسَ يُفرِطُ في ازديادٍ ... وأبقِ الجسمَ ممشوقًا وسيمًا</div>
+                <div class="poem-verse">طعامُكَ والشرابُ هما غذاءٌ ... فكُنْ عندَ اختيارِهِ عليمًا</div>
+                <div class="poem-verse">وزُرْ معَ كلِّ عارضةٍ طبيبًا ... لديهِ ستأخذُ النُصحَ الحكيمًا</div>
+                <div class="poem-verse">أنِمْ باكرًا (تهنأْ قريرًا) ... فكمْ قد طيَّبَ النومُ الجُسومًا</div>
+                <div class="poem-verse">رُزقتَ أخيرًا عافيةً وخيرًا ... وعشتَ بصحةٍ عيشًا نعيمًا</div>
+                
+                <div style="background: linear-gradient(to left, white, #FFF9E6); padding: 30px; border-radius: 20px; margin-top: 30px; border-right: 6px solid var(--warning);">
+                    <p style="font-size: 1.3em; line-height: 2; color: var(--dark);"><strong>📌 معاني الكلمات:</strong><br>
+                    • الورى: البشر والناس<br>
+                    • عارضة: حالة طارئة أو مرض<br>
+                    • ممشوقًا: متناسق القوام<br>
+                    • سقيمًا: مريضًا</p>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" onclick="switchTab('matching')">ابدأ الألعاب 🎮</button>
+                </div>
+            </div>
+
+            <div id="matching" class="game-section">
+                <h2 style="font-size: 2.8em; color: var(--primary); text-align: center; margin-bottom: 40px;">🔗 طابق النصيحة مع فائدتها</h2>
+                
+                <div class="matching-container">
+                    <div>
+                        <h3 style="font-size: 2em; color: var(--primary); text-align: center; margin-bottom: 25px;">النصيحة</h3>
+                        <div id="advices"></div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 2em; color: var(--primary); text-align: center; margin-bottom: 25px;">الفائدة</h3>
+                        <div id="benefits"></div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" onclick="checkMatching()">تحقق ✓</button>
+                    <button class="btn" onclick="resetMatching()">إعادة 🔄</button>
+                </div>
+            </div>
+
+            <div id="quiz" class="game-section">
+                <h2 style="font-size: 2.8em; color: var(--primary); text-align: center; margin-bottom: 40px;">❓ اختبر معلوماتك</h2>
+                <div id="quiz-questions"></div>
+                <div class="action-buttons">
+                    <button class="btn" onclick="checkQuiz()">تحقق ✓</button>
+                    <button class="btn" onclick="resetQuiz()">إعادة 🔄</button>
+                </div>
+            </div>
+
+            <div id="truefalse" class="game-section">
+                <h2 style="font-size: 2.8em; color: var(--primary); text-align: center; margin-bottom: 40px;">✔️ صح أم خطأ</h2>
+                <div id="tf-questions"></div>
+                <div class="action-buttons">
+                    <button class="btn" onclick="showResults()">عرض النتيجة 🏆</button>
+                </div>
+            </div>
+
+            <div id="order" class="game-section">
+                <h2 style="font-size: 2.8em; color: var(--primary); text-align: center; margin-bottom: 40px;">🔢 رتب الأبيات</h2>
+                <div style="background: linear-gradient(to left, white, #E3F2FD); padding: 25px; border-radius: 20px; margin-bottom: 30px; border-right: 6px solid var(--secondary);">
+                    <p style="font-size: 1.3em; color: var(--dark);">📝 اسحب الأبيات وأفلتها لترتيبها بالتسلسل الصحيح</p>
+                </div>
+                <div id="verses-container"></div>
+                <div class="action-buttons">
+                    <button class="btn" onclick="checkOrder()">تحقق من الترتيب ✓</button>
+                    <button class="btn" onclick="resetOrder()">خلط الأبيات 🔀</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="feedback" class="feedback-msg"></div>
+
+    <script>
+        const matchingPairs = [
+            { advice: 'ممارسة الرياضة كل يوم', benefit: 'جسم سليم ونشيط', id: 1 },
+            { advice: 'المحافظة على الوزن', benefit: 'جسم ممشوق', id: 2 },
+            { advice: 'الغذاء المتوازن', benefit: 'صحة البدن', id: 3 },
+            { advice: 'زيارة الطبيب', benefit: 'النصح الحكيم', id: 4 },
+            { advice: 'النوم المبكر', benefit: 'راحة الجسم', id: 5 }
+        ];
+
+        const quizQuestions = [
+            {
+                question: 'من هو شاعر قصيدة "نصائح طبيب"؟',
+                options: ['أحمد شوقي', 'أحمد الفارسي', 'محمود درويش', 'نزار قباني'],
+                correct: 1
+            },
+            {
+                question: 'ما هي مهنة الشاعر أحمد الفارسي؟',
+                options: ['مهندس', 'معلم', 'طبيب', 'محامي'],
+                correct: 2
+            },
+            {
+                question: 'ماذا تعني كلمة "الورى"؟',
+                options: ['الأشجار', 'الحيوانات', 'البشر', 'الطيور'],
+                correct: 2
+            },
+            {
+                question: 'متى يجب زيارة الطبيب حسب القصيدة؟',
+                options: ['كل يوم', 'مرة في الشهر', 'مع كل عارضة', 'مرة في السنة'],
+                correct: 2
+            },
+            {
+                question: 'ما فائدة النوم المبكر؟',
+                options: ['يضيع الوقت', 'يطيب النوم الجسوم', 'يسبب الكسل', 'لا فائدة'],
+                correct: 1
+            }
+        ];
+
+        const trueFalseQuestions = [
+            { statement: 'ممارسة الرياضة كل يوم تعد إنجازًا عظيمًا', correct: true },
+            { statement: 'الوزن الزائد لا يؤثر على الصحة', correct: false },
+            { statement: 'الطعام والشراب هما غذاء الجسم', correct: true },
+            { statement: 'لا حاجة لزيارة الطبيب عند المرض', correct: false },
+            { statement: 'النوم المبكر يريح الجسم', correct: true },
+            { statement: 'أحمد الفارسي طبيب وشاعر عماني', correct: true }
+        ];
+
+        const versesToOrder = [
+            { text: 'إذا ما شئتَ أن تحيا سليمًا', order: 1 },
+            { text: 'فخُذْ بعضَ النصائحِ من طبيبٍ', order: 2 },
+            { text: 'إذا ما كنتَ ذا جسمٍ سليمٍ', order: 3 },
+            { text: 'فراقبْ صحةَ البدنِ المُعافى', order: 4 },
+            { text: 'مُمارسةُ الرياضةِ كلَّ يومٍ', order: 5 }
+        ];
+
+        let score = 0, correct = 0, health = 100;
+        let selectedAdvice = null, selectedBenefit = null;
+        let matchedPairs = [];
+        let quizAnswers = [];
+        let tfAnswers = [];
+        let currentVerseOrder = [];
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'matching' && !document.getElementById('advices').hasChildNodes()) {
+                initMatching();
+            } else if (tabName === 'quiz' && !document.getElementById('quiz-questions').hasChildNodes()) {
+                initQuiz();
+            } else if (tabName === 'truefalse' && !document.getElementById('tf-questions').hasChildNodes()) {
+                initTrueFalse();
+            } else if (tabName === 'order' && !document.getElementById('verses-container').hasChildNodes()) {
+                initOrder();
+            }
+        }
+
+        function initMatching() {
+            const advicesDiv = document.getElementById('advices');
+            const benefitsDiv = document.getElementById('benefits');
+            
+            const shuffled = [...matchingPairs].sort(() => Math.random() - 0.5);
+            
+            matchingPairs.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'matching-item';
+                div.textContent = p.advice;
+                div.onclick = () => selectAdvice(div, p.id);
+                advicesDiv.appendChild(div);
+            });
+            
+            shuffled.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'matching-item';
+                div.textContent = p.benefit;
+                div.onclick = () => selectBenefit(div, p.id);
+                benefitsDiv.appendChild(div);
+            });
+        }
+
+        function selectAdvice(el, id) {
+            if (el.classList.contains('correct')) return;
+            document.querySelectorAll('#advices .matching-item').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedAdvice = {el, id};
+            if (selectedBenefit) checkMatch();
+        }
+
+        function selectBenefit(el, id) {
+            if (el.classList.contains('correct')) return;
+            document.querySelectorAll('#benefits .matching-item').forEach(i => i.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedBenefit = {el, id};
+            if (selectedAdvice) checkMatch();
+        }
+
+        function checkMatch() {
+            if (selectedAdvice.id === selectedBenefit.id) {
+                selectedAdvice.el.classList.add('correct');
+                selectedBenefit.el.classList.add('correct');
+                selectedAdvice.el.classList.remove('selected');
+                selectedBenefit.el.classList.remove('selected');
+                matchedPairs.push(selectedAdvice.id);
+                correct++;
+                score += 20;
+                updateScore();
+                showFeedback('ممتاز! إجابة صحيحة! 🎉', 'success');
+                
+                if (matchedPairs.length === matchingPairs.length) {
+                    setTimeout(() => {
+                        showFeedback('رائع! أكملت جميع المطابقات! 🌟', 'success');
+                    }, 1500);
+                }
+            } else {
+                setTimeout(() => {
+                    selectedAdvice.el.classList.remove('selected');
+                    selectedBenefit.el.classList.remove('selected');
+                }, 800);
+                health -= 5;
+                updateHealth();
+                showFeedback('حاول مرة أخرى! ❌', 'error');
+            }
+            selectedAdvice = null;
+            selectedBenefit = null;
+        }
+
+        function resetMatching() {
+            matchedPairs = [];
+            document.querySelectorAll('.matching-item').forEach(i => {
+                i.classList.remove('selected', 'correct');
+            });
+        }
+
+        function checkMatching() {
+            if (matchedPairs.length === matchingPairs.length) {
+                showFeedback('أحسنت! جميع المطابقات صحيحة! 🏆', 'success');
+            } else {
+                showFeedback(`لديك ${matchedPairs.length} من ${matchingPairs.length} مطابقة صحيحة`, 'success');
+            }
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback-msg ${type}`;
+            feedback.style.display = 'block';
+            
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 3000);
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('correct').textContent = correct;
+        }
+
+        function updateHealth() {
+            health = Math.max(0, health);
+            document.getElementById('health').textContent = health + '%';
+        }
+
+        // لعبة الاختبار
+        function initQuiz() {
+            const container = document.getElementById('quiz-questions');
+            quizAnswers = Array(quizQuestions.length).fill(null);
+            
+            quizQuestions.forEach((q, qIndex) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let html = `<div class="question-text">السؤال ${qIndex + 1}: ${q.question}</div>`;
+                
+                q.options.forEach((option, oIndex) => {
+                    html += `<div class="option" onclick="selectQuizOption(${qIndex}, ${oIndex})" 
+                             data-q="${qIndex}" data-o="${oIndex}">${option}</div>`;
+                });
+                
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function selectQuizOption(qIndex, oIndex) {
+            const options = document.querySelectorAll(`[data-q="${qIndex}"]`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+            quizAnswers[qIndex] = oIndex;
+        }
+
+        function checkQuiz() {
+            let correctCount = 0;
+            
+            quizQuestions.forEach((q, qIndex) => {
+                const options = document.querySelectorAll(`[data-q="${qIndex}"]`);
+                
+                options.forEach((opt, oIndex) => {
+                    opt.classList.remove('selected');
+                    
+                    if (oIndex === q.correct) {
+                        opt.classList.add('correct-answer');
+                    } else if (oIndex === quizAnswers[qIndex] && oIndex !== q.correct) {
+                        opt.classList.add('wrong-answer');
+                    }
+                });
+                
+                if (quizAnswers[qIndex] === q.correct) {
+                    correctCount++;
+                }
+            });
+            
+            correct += correctCount;
+            score += correctCount * 15;
+            
+            if (correctCount < quizQuestions.length) {
+                health -= (quizQuestions.length - correctCount) * 3;
+                updateHealth();
+            }
+            
+            updateScore();
+            
+            if (correctCount === quizQuestions.length) {
+                showFeedback('رائع! جميع الإجابات صحيحة! 🌟', 'success');
+            } else {
+                showFeedback(`جيد! حصلت على ${correctCount} من ${quizQuestions.length}`, 'success');
+            }
+            
+            setTimeout(() => {
+                document.querySelectorAll('.option').forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                });
+            }, 500);
+        }
+
+        function resetQuiz() {
+            quizAnswers = Array(quizQuestions.length).fill(null);
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                opt.style.pointerEvents = 'auto';
+            });
+        }
+
+        // لعبة صح/خطأ
+        function initTrueFalse() {
+            const container = document.getElementById('tf-questions');
+            tfAnswers = Array(trueFalseQuestions.length).fill(null);
+            
+            trueFalseQuestions.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'tf-card';
+                
+                card.innerHTML = `
+                    <div class="tf-statement">${item.statement}</div>
+                    <div class="tf-buttons">
+                        <button class="tf-btn correct" onclick="answerTrueFalse(${index}, true)">
+                            ✓ صحيحة
+                        </button>
+                        <button class="tf-btn wrong" onclick="answerTrueFalse(${index}, false)">
+                            ✗ خاطئة
+                        </button>
+                    </div>
+                    <div id="tf-result-${index}" style="margin-top: 20px; text-align: center; display: none;"></div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function answerTrueFalse(index, userAnswer) {
+            tfAnswers[index] = userAnswer;
+            
+            const resultDiv = document.getElementById(`tf-result-${index}`);
+            const isCorrect = userAnswer === trueFalseQuestions[index].correct;
+            
+            if (isCorrect) {
+                resultDiv.innerHTML = '<div style="color: var(--success); font-size: 1.4em; font-weight: 700;">✓ إجابة صحيحة!</div>';
+                correct++;
+                score += 10;
+            } else {
+                resultDiv.innerHTML = '<div style="color: var(--accent); font-size: 1.4em; font-weight: 700;">✗ إجابة خاطئة</div>';
+                health -= 5;
+                updateHealth();
+            }
+            
+            resultDiv.style.display = 'block';
+            updateScore();
+            
+            event.target.parentElement.querySelectorAll('button').forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+                btn.style.cursor = 'not-allowed';
+            });
+        }
+
+        // لعبة الترتيب
+        function initOrder() {
+            currentVerseOrder = [...versesToOrder].sort(() => Math.random() - 0.5);
+            renderVerses();
+        }
+
+        function renderVerses() {
+            const container = document.getElementById('verses-container');
+            container.innerHTML = '';
+            
+            currentVerseOrder.forEach((verse, index) => {
+                const div = document.createElement('div');
+                div.className = 'draggable-verse';
+                div.draggable = true;
+                div.textContent = verse.text;
+                div.dataset.order = verse.order;
+                div.dataset.index = index;
+                
+                div.addEventListener('dragstart', handleDragStart);
+                div.addEventListener('dragover', handleDragOver);
+                div.addEventListener('drop', handleDrop);
+                div.addEventListener('dragend', handleDragEnd);
+                
+                container.appendChild(div);
+            });
+        }
+
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            
+            if (draggedElement !== e.target) {
+                const draggedIndex = parseInt(draggedElement.dataset.index);
+                const targetIndex = parseInt(e.target.dataset.index);
+                
+                const temp = currentVerseOrder[draggedIndex];
+                currentVerseOrder[draggedIndex] = currentVerseOrder[targetIndex];
+                currentVerseOrder[targetIndex] = temp;
+                
+                renderVerses();
+            }
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function checkOrder() {
+            let isCorrect = true;
+            currentVerseOrder.forEach((verse, index) => {
+                if (verse.order !== index + 1) {
+                    isCorrect = false;
+                }
+            });
+            
+            if (isCorrect) {
+                correct++;
+                score += 30;
+                showFeedback('ممتاز! الترتيب صحيح! 🎊', 'success');
+            } else {
+                health -= 10;
+                updateHealth();
+                showFeedback('حاول مرة أخرى! الترتيب غير صحيح', 'error');
+            }
+            
+            updateScore();
+        }
+
+        function resetOrder() {
+            initOrder();
+        }
+
+        function showResults() {
+            const percentage = correct > 0 ? Math.round((correct / (correct + (100 - health) / 5)) * 100) : 0;
+            
+            let message = '';
+            if (percentage >= 90) {
+                message = 'ممتاز جدًا! أنت طبيب صغير! 🏆';
+            } else if (percentage >= 75) {
+                message = 'أحسنت! أداء جيد جدًا! ⭐';
+            } else if (percentage >= 60) {
+                message = 'جيد! استمر في التعلم 👍';
+            } else {
+                message = 'حاول مرة أخرى! 💪';
+            }
+            
+            showFeedback(message + `\nالنقاط: ${score} | الصحة: ${health}%`, 'success');
+        }
+
+        updateScore();
+    </script>
+</body>
+</html>
