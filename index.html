@@ -371,6 +371,90 @@
                 flex-direction: column;
             }
         }
+
+        /* الفوتر */
+        .footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a252f 100%);
+            padding: 50px 40px;
+            color: white;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section {
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .footer-text {
+            font-size: 1.2em;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: #1ABC9C;
+            transform: translateX(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            line-height: 40px;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+        }
+
+        .footer-icon:hover {
+            background: #1ABC9C;
+            transform: translateY(-5px);
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--primary), #1ABC9C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
     </style>
 </head>
 <body>
@@ -488,8 +572,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- الفوتر -->
+
+        <!-- الفوتر -->
         <div class="footer">
             <div class="footer-content">
                 <div class="footer-section">
@@ -515,6 +599,7 @@
                         الفصل الدراسي الثاني 2024-2025
                     </div>
                 </div>
+            </div>
 
             <div class="footer-bottom">
                 <div style="margin-bottom: 20px;">
@@ -524,16 +609,16 @@
                 </div>
                 <p>
                     تم التصميم بعناية لخدمة العملية التعليمية<br>
-                    <strong>© 2026 - جميع الحقوق محفوظة</strong><br>
+                    <strong>© 2025 - جميع الحقوق محفوظة</strong><br>
                     <span style="color: var(--primary);">💚 صُنع بحب للتعليم في سلطنة عُمان 💚</span>
                 </p>
             </div>
-            </div>
+        </div>
     </div>
 
     <div id="feedback" class="feedback-msg"></div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         const matchingPairs = [
             { advice: 'ممارسة الرياضة كل يوم', benefit: 'جسم سليم ونشيط', id: 1 },
             { advice: 'المحافظة على الوزن', benefit: 'جسم ممشوق', id: 2 },
@@ -941,13 +1026,3 @@
             } else if (percentage >= 60) {
                 message = 'جيد! استمر في التعلم 👍';
             } else {
-                message = 'حاول مرة أخرى! 💪';
-            }
-            
-            showFeedback(message + `\nالنقاط: ${score} | الصحة: ${health}%`, 'success');
-        }
-
-        updateScore();
-    </script>
-</body>
-</html>
