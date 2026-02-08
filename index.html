@@ -618,7 +618,7 @@
 
     <div id="feedback" class="feedback-msg"></div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         const matchingPairs = [
             { advice: 'ممارسة الرياضة كل يوم', benefit: 'جسم سليم ونشيط', id: 1 },
             { advice: 'المحافظة على الوزن', benefit: 'جسم ممشوق', id: 2 },
@@ -680,11 +680,30 @@
         let currentVerseOrder = [];
 
         function switchTab(tabName) {
+            // إخفاء جميع الأقسام
             document.querySelectorAll('.game-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
             
+            // إزالة التفعيل من جميع الأزرار
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // إظهار القسم المطلوب
+            document.getElementById(tabName).classList.add('active');
+            
+            // تفعيل الزر المناسب
+            const tabButtons = {
+                'poem': 0,
+                'matching': 1,
+                'quiz': 2,
+                'truefalse': 3,
+                'order': 4
+            };
+            
+            const buttonIndex = tabButtons[tabName];
+            if (buttonIndex !== undefined) {
+                document.querySelectorAll('.tab-btn')[buttonIndex].classList.add('active');
+            }
+            
+            // تهيئة المحتوى إذا لم يتم تهيئته بعد
             if (tabName === 'matching' && !document.getElementById('advices').hasChildNodes()) {
                 initMatching();
             } else if (tabName === 'quiz' && !document.getElementById('quiz-questions').hasChildNodes()) {
@@ -933,6 +952,28 @@
             });
         }
 
+        function showResults() {
+            const answeredCount = tfAnswers.filter(a => a !== null).length;
+            
+            if (answeredCount < trueFalseQuestions.length) {
+                showFeedback(`أجب على جميع الأسئلة! أجبت على ${answeredCount} من ${trueFalseQuestions.length}`, 'error');
+            } else {
+                const correctTF = tfAnswers.filter((a, i) => a === trueFalseQuestions[i].correct).length;
+                const percentage = Math.round((correctTF / trueFalseQuestions.length) * 100);
+                
+                let message = '';
+                if (percentage >= 90) {
+                    message = `ممتاز جدًا! ${correctTF}/${trueFalseQuestions.length} - نسبة ${percentage}%! 🏆`;
+                } else if (percentage >= 70) {
+                    message = `جيد جدًا! ${correctTF}/${trueFalseQuestions.length} - نسبة ${percentage}%! ⭐`;
+                } else {
+                    message = `${correctTF}/${trueFalseQuestions.length} - نسبة ${percentage}% - حاول مرة أخرى! 💪`;
+                }
+                
+                showFeedback(message, 'success');
+            }
+        }
+
         // لعبة الترتيب
         function initOrder() {
             currentVerseOrder = [...versesToOrder].sort(() => Math.random() - 0.5);
@@ -1014,15 +1055,6 @@
         function resetOrder() {
             initOrder();
         }
-
-        function showResults() {
-            const percentage = correct > 0 ? Math.round((correct / (correct + (100 - health) / 5)) * 100) : 0;
-            
-            let message = '';
-            if (percentage >= 90) {
-                message = 'ممتاز جدًا! أنت طبيب صغير! 🏆';
-            } else if (percentage >= 75) {
-                message = 'أحسنت! أداء جيد جدًا! ⭐';
-            } else if (percentage >= 60) {
-                message = 'جيد! استمر في التعلم 👍';
-            } else {
+    </script>
+</body>
+</html>
